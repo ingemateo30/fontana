@@ -49,7 +49,6 @@ const ContactForm = () => {
 
   return (
     <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6 mt-6">
-      <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">Solicita Información</h2>
       <p className="text-gray-600 text-center mb-6">Completa el formulario y un asesor se pondrá en contacto contigo.</p>
       
       {formStatus.submitted ? (
@@ -154,7 +153,7 @@ const ContactForm = () => {
           
           <button 
             type="submit" 
-            className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition"
+            className="w-full bg-orange-600 text-white py-2 rounded-md hover:bg-orange-600 transition"
             disabled={formStatus.submitting}
           >
             {formStatus.submitting ? 'Enviando...' : 'Enviar Solicitud'}

@@ -1,76 +1,73 @@
 import React from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-import icon from "leaflet/dist/images/marker-icon.png";
-import iconShadow from "leaflet/dist/images/marker-shadow.png";
+import { GoogleMap, LoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 
-// Configuración del icono predeterminado
-const DefaultIcon = L.icon({
-  iconUrl: icon,
-  shadowUrl: iconShadow,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-});
+const mapContainerStyle = {
+  width: "100%",
+  height: "500px",
+  borderRadius: "10px",
+  boxShadow: "0 4px 10px rgba(0,0,0,0.1)"
+};
 
-L.Marker.prototype.options.icon = DefaultIcon;
+const center = { lat: 4.6097, lng: -74.0817 }; // Bogotá, Colombia
+
+const lotMarkers = [
+  { id: 1, number: "15A", position: { lat: 4.6100, lng: -74.0820 }, available: true },
+  { id: 2, number: "16B", position: { lat: 4.6105, lng: -74.0825 }, available: true },
+  { id: 3, number: "17C", position: { lat: 4.6110, lng: -74.0830 }, available: false },
+  { id: 4, number: "18D", position: { lat: 4.6095, lng: -74.0815 }, available: true },
+];
 
 const Map = ({ showLots = false }) => {
-  const projectCenter = [4.6097, -74.0817]; // Bogotá, Colombia
-
-  const lotMarkers = [
-    { id: 1, number: "15A", position: [4.6100, -74.0820], available: true },
-    { id: 2, number: "16B", position: [4.6105, -74.0825], available: true },
-    { id: 3, number: "17C", position: [4.6110, -74.0830], available: false },
-    { id: 4, number: "18D", position: [4.6095, -74.0815], available: true },
-  ];
+  const [selectedLot, setSelectedLot] = React.useState(null);
 
   return (
-    <div className="relative w-full h-[500px] rounded-lg shadow-lg overflow-hidden">
-      <MapContainer center={projectCenter} zoom={16} scrollWheelZoom={false} className="h-full w-full">
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        
-        {/* Marcador principal */}
-        <Marker position={projectCenter}>
-          <Popup>
-            <strong>Fontana</strong><br />
-            Conjunto residencial
-          </Popup>
-        </Marker>
+    <div className="relative w-full h-[500px]">
+      <LoadScript googleMapsApiKey="TU_API_KEY">
+        <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={16}>
+          {/* Marcador principal */}
+          <Marker position={center} label="F" />
 
-        {/* Marcadores de lotes */}
-        {showLots &&
-          lotMarkers.map((lot) => (
-            <Marker
-              key={lot.id}
-              position={lot.position}
-              icon={L.divIcon({
-                className: `flex items-center justify-center font-bold text-white text-sm rounded-full ${
-                  lot.available ? "bg-green-500" : "bg-red-500"
-                }`,
-                html: `<div class="w-8 h-8 flex items-center justify-center rounded-full">${lot.number}</div>`,
-                iconSize: [30, 30],
-                iconAnchor: [15, 15],
-              })}
+          {/* Marcadores de lotes */}
+          {showLots &&
+            lotMarkers.map((lot) => (
+              <Marker
+                key={lot.id}
+                position={lot.position}
+                label={{
+                  text: lot.number,
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "14px",
+                }}
+                icon={{
+                  url: lot.available
+                    ? "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+                    : "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+                }}
+                onClick={() => setSelectedLot(lot)}
+              />
+            ))}
+
+          {/* Ventana de información para lotes */}
+          {selectedLot && (
+            <InfoWindow
+              position={selectedLot.position}
+              onCloseClick={() => setSelectedLot(null)}
             >
-              <Popup>
-                <strong>Lote {lot.number}</strong>
-                <br />
-                Estado: {lot.available ? "Disponible" : "Vendido"}
-                <br />
-                <a href={`/lots/${lot.id}`} className="text-blue-500 hover:underline">
+              <div className="text-gray-800">
+                <h3 className="font-semibold">Lote {selectedLot.number}</h3>
+                <p>Estado: {selectedLot.available ? "Disponible" : "Vendido"}</p>
+                <a href={`/lots/${selectedLot.id}`} className="text-blue-500 hover:underline">
                   Ver detalles
                 </a>
-              </Popup>
-            </Marker>
-          ))}
-      </MapContainer>
+              </div>
+            </InfoWindow>
+          )}
+        </GoogleMap>
+      </LoadScript>
 
       {/* Información superpuesta */}
-      <div className="absolute top-5 left-5 bg-white shadow-lg p-4 rounded-lg max-w-sm">
+      <div className="absolute top-5 left-5 bg-white shadow-lg p-4 rounded-lg max-w-sm z-10">
         <h3 className="text-lg font-semibold text-gray-800">Ubicación Privilegiada</h3>
         <p className="text-gray-600 mt-2">
           Nuestro residencial está estratégicamente ubicado con fácil acceso a:
@@ -87,3 +84,4 @@ const Map = ({ showLots = false }) => {
 };
 
 export default Map;
+
