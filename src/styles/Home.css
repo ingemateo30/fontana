@@ -1,0 +1,98 @@
+/* Estilos generales de la página Home */
+.home-page {
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Sección de introducción */
+  .intro-section {
+    padding: 4rem 2rem;
+    text-align: center;
+    background-color: #f5f5f5;
+  }
+  
+  .intro-section .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .intro-section h2 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .intro-section p {
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  /* Sección de llamada a la acción (CTA) */
+  .cta-section {
+    padding: 4rem 2rem;
+    text-align: center;
+    background-color: #ff6600;
+    color: white;
+  }
+  
+  .cta-section .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .cta-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cta-section p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .btn-large {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff6600;
+    background: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+  
+  .btn-large:hover {
+    background: #e6e6e6;
+  }
+  
+  /* Sección de contacto */
+  .contact-section {
+    padding: 4rem 2rem;
+    background-color: #f5f5f5;
+    text-align: center;
+  }
+  
+  .contact-section .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Responsividad */
+  @media (max-width: 768px) {
+    .intro-section h2,
+    .cta-section h2 {
+      font-size: 2rem;
+    }
+  
+    .intro-section p,
+    .cta-section p {
+      font-size: 1rem;
+    }
+  
+    .btn-large {
+      font-size: 1rem;
+      padding: 0.8rem 1.5rem;
+    }
+  }
+  
