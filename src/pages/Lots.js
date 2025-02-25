@@ -1,5 +1,6 @@
 import React from 'react';
 import LotsList from '../components/LotsList';
+import { FaWhatsapp } from 'react-icons/fa';
 
 const Lots = () => {
   return (
@@ -14,6 +15,14 @@ const Lots = () => {
       <div className="container mx-auto px-4 py-8">
         <LotsList />
       </div>
+       <a
+              href="https://wa.me/573184792991"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition duration-300"
+            >
+              <FaWhatsapp className="text-3xl" />
+            </a>
     </div>
   );
 };

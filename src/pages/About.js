@@ -1,3 +1,5 @@
+import { FaWhatsapp } from 'react-icons/fa';
+
 const About = () => {
     return (
       <div className="bg-white text-gray-800 py-12 px-6 lg:px-20">
@@ -59,6 +61,14 @@ const About = () => {
             Contáctanos
           </a>
         </div>
+         <a
+                href="https://wa.me/573184792991"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition duration-300"
+              >
+                <FaWhatsapp className="text-3xl" />
+              </a>
       </div>
     );
   };
